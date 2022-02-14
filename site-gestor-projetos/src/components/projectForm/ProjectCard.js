@@ -10,6 +10,7 @@ function ProjetoCard({ id, name, budget, category, handleRemove }) {
         handleRemove(id);
     }
 
+    //*****/
     return (
         <div className={style.project_card}>
             <h4>{name}</h4>
