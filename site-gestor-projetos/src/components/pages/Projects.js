@@ -11,12 +11,14 @@ import style from './Projects.module.css';
 function Projetos() {
     const [projects, setProjects] = useState([]);
     const [removeLoading, setRemoveLoading] = useState(false);
+    const [projectMessage, setProjectMessage] = useState('');
 
     const location = useLocation();
     let message = '';
     if (location.state) {
         message = location.state.message;
     }
+
     //Carrega os cards de projetos salvos no db.
     useEffect(() => {
         fetch('http://localhost:5000/projects', {
@@ -34,6 +36,22 @@ function Projetos() {
             .catch(err => console.log(err))
     }, [])
 
+    //remove projects from DB.
+    function removeProject(id) {
+        fetch(`http://localhost:5000/projects/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })//delete the project from DB.
+            .then(resp => resp.json())
+            .then(data => {
+                setProjects(projects.filter((project) => project.id !== id))
+                setProjectMessage('Projeto removido com sucesso!')
+            })//delete the frontend project without needing a new request.
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className={style.projeto_container}>
             <div className={style.title_container}>
@@ -41,6 +59,7 @@ function Projetos() {
                 <LinkButton to="/newproject" text="Criar Projeto" />
             </div>
             {message && <Message type="success" msg={message} />}
+            {projectMessage && <Message type="success" msg={projectMessage} />}
             <Container >
                 {projects.length > 0 &&
                     projects.map((project) => (
@@ -50,6 +69,7 @@ function Projetos() {
                             budget={project.budget}
                             id={project.id}
                             key={project.id}
+                            handleRemove={removeProject}
                         />
                     ))}
                 {!removeLoading && <Loading />}
