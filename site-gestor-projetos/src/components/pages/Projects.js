@@ -8,7 +8,7 @@ import LinkButton from '../layout/LinkButton.js';
 import ProjectCard from '../projectForm/ProjectCard.js';
 import style from './Projects.module.css';
 
-function Projetos() {
+function Projects() {
     const [projects, setProjects] = useState([]);
     const [removeLoading, setRemoveLoading] = useState(false);
     const [projectMessage, setProjectMessage] = useState('');
@@ -80,4 +80,4 @@ function Projetos() {
         </div>
     );
 }
-export default Projetos;
+export default Projects;
