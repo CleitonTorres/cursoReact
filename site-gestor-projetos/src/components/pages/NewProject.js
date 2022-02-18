@@ -25,7 +25,7 @@ function NovoProjeto() {
             .then((data) => {
                 console.log(data) //verification 2, after submit. 
                 //redirect
-                navigate('/projects', { state: { message: 'Projeto criado com sucesso!' } })
+                navigate('/projects', { state: { message: "Projeto criado com sucesso!" } });
             })
             .catch((err) => console.log(err))
     }

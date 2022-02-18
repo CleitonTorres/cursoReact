@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import style from './Message.module.css';
 
 function Message({ type, msg }) {
+    const id = msg;
     const [visible, setVisible] = useState(false);
-
+    
     useEffect(() => {
         if (!msg) {
             setVisible(false);
@@ -18,7 +19,7 @@ function Message({ type, msg }) {
 
         return () => clearTimeout(timer)
 
-    }, [msg])
+    }, [id])
 
     return (
         <>

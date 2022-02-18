@@ -13,10 +13,10 @@
     },
     {
       "name": "ProjetoTeste02",
-      "budget": "2000",
+      "budget": "2500",
       "category": {
-        "id": "2",
-        "name": "Desenvolvimento"
+        "id": "1",
+        "name": "Infra"
       },
       "cost": 0,
       "service": [],
@@ -24,7 +24,7 @@
     },
     {
       "name": "ProjetoTeste03",
-      "budget": "3000",
+      "budget": "3110",
       "category": {
         "id": "3",
         "name": "Design"
@@ -32,6 +32,17 @@
       "cost": 0,
       "service": [],
       "id": 3
+    },
+    {
+      "name": "Projeto Teste Bibl MSG",
+      "budget": "1399",
+      "category": {
+        "id": "2",
+        "name": "Desenvolvimento"
+      },
+      "cost": 0,
+      "service": [],
+      "id": 4
     }
   ],
   "category": [
@@ -50,6 +61,33 @@
     {
       "id": 4,
       "name": "Planejamento"
+    }
+  ],
+  "msg": [
+    {
+      "title": "salveProjectError",
+      "msgText": "Algo deu errado ao salvar o processo!",
+      "id": 1
+    },
+    {
+      "title": "salveProjectSuccess",
+      "msgText": "Salvo com sucesso!",
+      "id": 2
+    },
+    {
+      "title": "budgetLessCost",
+      "msgText": "O orçamento não pode ser menor que o custo do projeto!",
+      "id": 3
+    },
+    {
+      "title": "createProjectSuccess",
+      "msgText": "Projeto criado com sucesso!",
+      "id": 4
+    },
+    {
+      "title": "updateProjectSuccess",
+      "msgText": "Projeto atualizado!",
+      "id": 5
     }
   ]
 }
