@@ -8,7 +8,7 @@
         "name": "Infra"
       },
       "cost": 0,
-      "service": [],
+      "services": [],
       "id": 1
     },
     {
@@ -18,8 +18,15 @@
         "id": "1",
         "name": "Infra"
       },
-      "cost": 0,
-      "service": [],
+      "cost": 1000,
+      "services": [
+        {
+          "name": "Novo serviço 01",
+          "cost": "1000",
+          "description": "Serviço de teste 010101",
+          "id": "c3254286-d755-493d-bf8b-c8163de23cea"
+        }
+      ],
       "id": 2
     },
     {
@@ -30,7 +37,7 @@
         "name": "Design"
       },
       "cost": 0,
-      "service": [],
+      "services": [],
       "id": 3
     },
     {
@@ -41,7 +48,7 @@
         "name": "Desenvolvimento"
       },
       "cost": 0,
-      "service": [],
+      "services": [],
       "id": 4
     }
   ],
@@ -61,33 +68,6 @@
     {
       "id": 4,
       "name": "Planejamento"
-    }
-  ],
-  "msg": [
-    {
-      "title": "salveProjectError",
-      "msgText": "Algo deu errado ao salvar o processo!",
-      "id": 1
-    },
-    {
-      "title": "salveProjectSuccess",
-      "msgText": "Salvo com sucesso!",
-      "id": 2
-    },
-    {
-      "title": "budgetLessCost",
-      "msgText": "O orçamento não pode ser menor que o custo do projeto!",
-      "id": 3
-    },
-    {
-      "title": "createProjectSuccess",
-      "msgText": "Projeto criado com sucesso!",
-      "id": 4
-    },
-    {
-      "title": "updateProjectSuccess",
-      "msgText": "Projeto atualizado!",
-      "id": 5
     }
   ]
 }

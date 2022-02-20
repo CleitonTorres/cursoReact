@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {parse, v4 as uuidv4} from 'uuid';
 
 import style from './Project.module.css';
 import Loading from '../layout/Loading.js';
 import Container from '../layout/Container.js';
 import ProjectForm from '../projectForm/ProjectForm.js';
+import ServiceForm from '../serviceForm/ServiceForm.js';
 import Message from '../layout/Message.js';
 
 function Project() {
@@ -26,6 +28,42 @@ function Project() {
             .catch(err => console.log(err))
         }, 3000)//remover setTimeout nos projeto finalizado.
     }, [id]); //id é a referencia a ser monitorada pelo useEffect.
+
+    function creatService (project){
+        setMessage('')// reseta o valor da mensagem.
+
+        //last service
+        const lastService = project.services[project.services.length - 1]
+        lastService.id = uuidv4();
+        const lastServiceCost = lastService.cost        
+        const newCost = parseFloat(project.cost) + parseFloat(lastServiceCost)
+
+        //max value validation
+        if(newCost > parseFloat(project.budget)){
+            setMessage("Orçamento ultrapassado! Verifique o valor do serviço!")
+            setTypeMessage("error")
+            project.services.pop()
+            return false;
+        }
+
+        //add servive cost to project total cost
+        project.cost = newCost
+
+        //update project
+        fetch(`http://localhost:5000/projects/${project.id}`, {
+            method: 'PATCH', //atualiza apenas o que é enviado e não todo o DB.
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(project) //dados que estão sendo enviados para o DB.
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+            //exibir os serviços.
+            console.log(data)
+        })
+        .catch(err => console.log(err))
+    }
 
     function toggleProjectForm(){
         setShowProjectForm(!showProjectForm);
@@ -79,7 +117,7 @@ function Project() {
                                     <span>Categoria:</span> {project.category.name}
                                 </p>
                                 <p>
-                                    <span>Total do orçamento:</span> R${project.budget}
+                                    <span>Total do orçamento:</span> R${project.cost}
                                 </p>
                                 <p>
                                     <span>Total utilizado:</span> R${project.cost}
@@ -101,7 +139,12 @@ function Project() {
                                 {!showServiceForm ? 'Adicionar Serviço' : 'Fechar'}
                             </button>
                             <div className={style.project_info}>
-                                {showServiceForm && <div>Formulário do Serviço</div>}
+                                {showServiceForm && (
+                                    <ServiceForm 
+                                        handleSubmit={creatService}
+                                        btnText="Adicionar serviço"
+                                        projectData={project}
+                                    />)}
                             </div>
                     </div>
                     <h2>Serviços</h2>
