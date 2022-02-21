@@ -7,26 +7,32 @@ import Loading from '../layout/Loading.js';
 import Container from '../layout/Container.js';
 import ProjectForm from '../projectForm/ProjectForm.js';
 import ServiceForm from '../serviceForm/ServiceForm.js';
+import ServiceCard from "../serviceForm/ServiceCard";
 import Message from '../layout/Message.js';
 
 function Project() {
     const { id } = useParams();
     const [project, setProject] = useState([]);
+    const [services, setServices] = useState([]);
     const [showProjectForm, setShowProjectForm] = useState(false);
     const [showServiceForm, setshowServiceForm] = useState(false);
     const [message, setMessage] = useState();
     const [typeMessage, setTypeMessage] = useState();
 
     useEffect(() => {
+        //busca o projeto no DB. A func setTimeout pode ser retirada na versão final.
         setTimeout(() => {
             fetch(`http://localhost:5000/projects/${id}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', }
         })
             .then(resp => resp.json())
-            .then((data) => { setProject(data) })
+            .then((data) => {
+                setProject(data) 
+                setServices(data.services)
+            })
             .catch(err => console.log(err))
-        }, 3000)//remover setTimeout nos projeto finalizado.
+        }, 300)//remover setTimeout nos projeto finalizado.
     }, [id]); //id é a referencia a ser monitorada pelo useEffect.
 
     function creatService (project){
@@ -49,7 +55,7 @@ function Project() {
         //add servive cost to project total cost
         project.cost = newCost
 
-        //update project
+        //update project // create new service
         fetch(`http://localhost:5000/projects/${project.id}`, {
             method: 'PATCH', //atualiza apenas o que é enviado e não todo o DB.
             headers: {
@@ -59,10 +65,13 @@ function Project() {
         })
         .then((resp) => resp.json())
         .then((data) => {
-            //exibir os serviços.
-            console.log(data)
+            setshowServiceForm(false)
         })
         .catch(err => console.log(err))
+    }
+
+    function removeService(){
+
     }
 
     function toggleProjectForm(){
@@ -149,7 +158,22 @@ function Project() {
                     </div>
                     <h2>Serviços</h2>
                     <Container customClass={'start'}>
-                            <p>Itens do Serviço</p>
+                            {
+                                services.length > 0 &&
+                                services.map((service) => (
+                                    <ServiceCard 
+                                        id={service.id}
+                                        name={service.name}
+                                        cost={service.cost}
+                                        description={service.description}
+                                        key={service.id}
+                                        handleRemove={removeService}
+                                    />
+                                ))
+                            }
+                            {
+                                services.length === 0 && <p>Não há serviços cadastrados.</p>
+                            }
                     </Container>
                 </Container>
             </div>
