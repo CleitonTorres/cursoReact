@@ -36,7 +36,7 @@ function Project() {
     }, [id]); //id é a referencia a ser monitorada pelo useEffect.
 
     function creatService (project){
-        setMessage('')// reseta o valor da mensagem.
+        setMessage('')//clear msg before send.
 
         //last service
         const lastService = project.services[project.services.length - 1]
@@ -65,13 +65,38 @@ function Project() {
         })
         .then((resp) => resp.json())
         .then((data) => {
+            setMessage('Serviço adicionado com sucesso!')
+            setTypeMessage('success')
             setshowServiceForm(false)
         })
         .catch(err => console.log(err))
     }
 
-    function removeService(){
+    function removeService(id, cost){
+        const servicesUpdated = project.services.filter(
+            (service) => service.id !== id //retem apenas o serviço com id igual ao id do atributo os que forem diferentes não ficam no filtro.
+        )
 
+        const projectUpdated = project
+        projectUpdated.services = servicesUpdated
+        projectUpdated.cost = parseFloat(projectUpdated.cost) - parseFloat(cost)
+
+        fetch(`http://localhost:5000/projects/${projectUpdated.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(projectUpdated)
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+            setMessage('')//clear msg before send.
+            setProject(projectUpdated)
+            setServices(servicesUpdated)
+            setMessage('Serviço removido com sucesso!')
+            setTypeMessage('success')
+        })
+        .catch(err => console.log(err))
     }
 
     function toggleProjectForm(){
@@ -115,6 +140,7 @@ function Project() {
             <div  className={style.project_details} >
                 <Container customClass="column" name="Container_Project">
                     {message && <Message type={typeMessage} msg={message} />}
+                    
                     <div className={style.details_container}  name="div detalhes project">
                         <h1>Projeto: {project.name}</h1>
                         <button onClick={toggleProjectForm} className={style.btn}>
@@ -126,7 +152,7 @@ function Project() {
                                     <span>Categoria:</span> {project.category.name}
                                 </p>
                                 <p>
-                                    <span>Total do orçamento:</span> R${project.cost}
+                                    <span>Total do orçamento:</span> R${project.budget}
                                 </p>
                                 <p>
                                     <span>Total utilizado:</span> R${project.cost}

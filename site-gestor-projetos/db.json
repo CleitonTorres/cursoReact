@@ -18,7 +18,7 @@
         "id": "1",
         "name": "Infra"
       },
-      "cost": 2500,
+      "cost": 1100,
       "services": [
         {
           "name": "Novo serviço 01",
@@ -28,27 +28,9 @@
         },
         {
           "name": "Novo serviço 02",
-          "cost": "300",
+          "cost": "100",
           "description": "Serviço teste 02",
-          "id": "ec491c33-3af9-4138-9909-b3209aa656dc"
-        },
-        {
-          "name": "Novo serviço 03",
-          "cost": "400",
-          "description": "Serviço teste 03",
-          "id": "c409ac20-5931-4fa4-a32d-e317e04ea1be"
-        },
-        {
-          "name": "Novo serviço 03",
-          "cost": "400",
-          "description": "Serviço teste 03",
-          "id": "c409ac20-5931-4fa4-a32d-e317e04ea1be"
-        },
-        {
-          "name": "Novo serviço 03",
-          "cost": "400",
-          "description": "Serviço teste 03",
-          "id": "c409ac20-5931-4fa4-a32d-e317e04ea1be"
+          "id": "e49c66a1-ec47-4d58-8e85-685dd22f0714"
         }
       ],
       "id": 2
